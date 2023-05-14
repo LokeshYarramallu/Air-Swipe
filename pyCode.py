@@ -1,7 +1,7 @@
 import cv2
 import mediapipe as mp
 import math
-import pyautogui as gui
+from pyautogui import hotkey, press
 import time
 
 class HandDetector:
@@ -104,7 +104,7 @@ class HandDetector:
             return length, info
 
 def main():
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     detector = HandDetector(detectionCon=0.8, maxHands=2)
 
     swipe_ended = False
@@ -146,7 +146,7 @@ def main():
                 if zoom_ended:
                     zoom_ended = False
                     print("Zoomed")
-                    gui.hotkey("ctrl", "+")
+                    hotkey("ctrl", "+")
 
             if fingers1[0] and fingers1[1] and fingers1[2] and not fingers1[3] and not fingers1[4] :
                 length, info, _ = detector.findDistance(lmList1[4][0:2], lmList1[8][0:2], img)
@@ -160,7 +160,7 @@ def main():
                 if zout_ended:
                     zout_ended = False
                     print("Zoomed Out")
-                    gui.hotkey('ctrl', '-')
+                    hotkey('ctrl', '-')
 
             if fingers1[1] and fingers1[2] and fingers1[3] and fingers1[4]:
                 indMid = [lmList1[8][0], lmList1[12][0], lmList1[16][0], lmList1[16][0]]
@@ -174,7 +174,7 @@ def main():
 
                 if swipe_ended:
                     print("Swipe detected!")
-                    gui.press('right')
+                    press('right')
                     swipe_ended = False
 
             if fingers1[1] and fingers1[2] and fingers1[3] and not fingers1[4]:
@@ -189,7 +189,7 @@ def main():
 
                 if lswipe_ended:
                     print("Left Swipe detected!")
-                    gui.press('left')
+                    press('left')
                     lswipe_ended = False
 
             if all(fingers1):
