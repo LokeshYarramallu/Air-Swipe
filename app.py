@@ -18,21 +18,30 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    link = request.form.get('code')
+
+    link = link.replace('width="476px"', 'width="100%"')
+    link = link.replace('height="288px"', 'height="100%"')
+
     if 'pdfFile' in request.files:
-        file = request.files['pdfFile']
-        if file.filename != '':
-            filename = secure_filename(file.filename)
-            upload_path = os.path.join('uploads', filename)
-            file.save(upload_path)
-
-            # Start the mad function in a new thread
-            mad_thread = Thread(target=mad)
-            mad_thread.start()
-
-            # Send the file in the current context
-            return send_file(upload_path)
-    return 'Please select a file to upload'
-
+        pdf_file = request.files['pdfFile']
+        file_path = os.path.join(os.getcwd(), pdf_file.filename)
+        pdf_file.save(file_path)
+        if os.path.exists(file_path):
+            return send_file(file_path)
+            madPromise = mad()
+            await madPromise
+        else:
+            return "File not found", 404
+    elif link != "":
+        if link.startswith("<i"):
+            return link
+            madPromise = mad()
+            await madPromise
+        else:
+            return "Enter a valid link"
+    else:
+        return "Please select a file to upload"
 
 @app.route('/Home', methods=['GET'])
 def home():
