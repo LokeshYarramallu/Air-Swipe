@@ -13,4 +13,4 @@ https://youtu.be/ZD7W10NvVBQ
 ![image](https://github.com/LokeshYarramallu/Air-Swipe/assets/117736898/07ea48d1-7846-42af-9270-14d55953acb1)
 ![image](https://github.com/LokeshYarramallu/Air-Swipe/assets/117736898/ab071ace-6995-4a28-bda2-aaa22ded2cf5)
 ![image](https://github.com/LokeshYarramallu/Air-Swipe/assets/117736898/6a0f055a-8050-4cbd-94f8-b82a0b68b165)
-![image](https://github.com/LokeshYarramallu/Air-Swipe/assets/117736898/6f35982a-f743-4fe2-b4d7-a179b6465264)
+![image](https://github.com/LokeshYarramallu/Air-Swipe/assets/117736898/aad2600d-8e30-496a-bd70-427d84469a62)
