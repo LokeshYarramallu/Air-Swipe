@@ -28,4 +28,10 @@
 
 ![image](https://github.com/LokeshYarramallu/Air-Swipe/assets/117736910/d1b4b324-000f-4613-9b33-2d5c16cf4611)
 
+![image](https://github.com/LokeshYarramallu/Air-Swipe/assets/117736910/e017634d-da95-4119-8d56-07f195575733)
+
+![image](https://github.com/LokeshYarramallu/Air-Swipe/assets/117736910/b189c7e4-ef22-4693-aa69-93a5a5bde593)
+
+![image](https://github.com/LokeshYarramallu/Air-Swipe/assets/117736910/3a8e5ed2-d145-422c-ba96-f711f7d308b6)
+
 https://youtu.be/ZD7W10NvVBQ
