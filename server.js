@@ -17,19 +17,26 @@ app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Function to run Python script
-async function mad() {
-  const pythonProcess = spawn('python', ['pyCode.py']);
+function runPythonScript() {
+  return new Promise((resolve, reject) => {
+    const pythonProcess = spawn('python', ['pyCode.py']);
 
-  pythonProcess.stdout.on('data', (data) => {
-    console.log(`Output from Python script: ${data}`);
+    pythonProcess.stdout.on('data', (data) => {
+      console.log(`Output from Python script: ${data}`);
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+      console.error(`Error from Python script: ${data}`);
+    });
+
+    pythonProcess.on('close', (code) => {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject(new Error(`Python script execution failed with code ${code}`));
+      }
+    });
   });
-
-  pythonProcess.stderr.on('data', (data) => {
-    console.error(`Error from Python script: ${data}`);
-  });
-
-  await new Promise((resolve) => pythonProcess.on('close', resolve));
-  await new Promise((resolve) => setImmediate(resolve));
 }
 
 // Multer configuration
@@ -61,7 +68,7 @@ app.get('/Home', (req, res) => {
   res.sendFile(__dirname + '/Home.html');
 });
 
-app.post('/upload', upload.single('pdfFile'), async (req, res) => {
+app.post('/upload', upload.single('pdfFile'), async (req, res, next) => {
   var link = req.body.code;
 
   link = link.replace('width="476px"', 'width="100%"');
@@ -70,19 +77,28 @@ app.post('/upload', upload.single('pdfFile'), async (req, res) => {
   if (req.file) {
     const filePath = path.join(__dirname, req.file.path);
     if (fs.existsSync(filePath)) {
-      const madPromise = mad();
-      await madPromise;
-      res.sendFile(filePath);
+      try {
+        res.sendFile(filePath);
+        await runPythonScript();
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred while running the Python script');
+      }
     } else {
       res.status(404).send('File not found');
     }
   } else if (link != "") {
     if (link[0] == "<" && link[1] == "i") {
-      const madPromise = mad();
-      await madPromise;
-      res.send(link);
+      try {
+        res.send(link);
+        await runPythonScript();
+        
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred while running the Python script');
+      }
     } else {
-      res.send("Enter a valid link");
+      res.send('Enter a valid link');
     }
   } else {
     res.send('Please select a file to upload');
